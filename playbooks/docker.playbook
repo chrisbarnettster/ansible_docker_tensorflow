@@ -1,0 +1,35 @@
+---
+- hosts: "{{ variable_host | default('localhost') }}"
+  vars:
+      current_host: "{{hostvars[inventory_hostname]['ansible_hostname']}}"
+      current_ip: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+  tasks:
+   - name: Install epel release
+     yum:
+      name: "epel-release"
+      state: present
+   - name: Remove old docker install
+     yum: pkg={{ item }} state=removed
+     with_items:
+       - docker
+       - docker-common
+       - docker-selinux
+       - docker-engine
+   - name: Install required software
+     yum: pkg={{ item }} state=present
+     with_items:
+       - yum-utils
+       - device-mapper-persistent-data
+       - lvm2
+   - name: add docker stable repo
+     command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+   - name: Install docker-ce
+     yum: pkg={{ item }} state=present
+     with_items:
+       - docker-ce
+   - name: switch on docker
+     service: name={{ item }} state=started enabled=yes
+     with_items:
+       - docker
+   - name: docker hello world
+     command: docker run hello-world

@@ -1,0 +1,18 @@
+---
+- hosts: "{{ variable_host | default('localhost') }}"
+  vars:
+      current_host: "{{hostvars[inventory_hostname]['ansible_hostname']}}"
+      current_ip: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+  tasks:
+   - name: add nvidia docker repo
+     command: yum-config-manager --add-repo https://nvidia.github.io/nvidia-docker/centos7/x86_64/nvidia-docker.repo
+   - name: Install nvidia docker
+     yum: pkg={{ item }} state=present
+     with_items:
+       - nvidia-docker2
+   - name: restart docker daemon
+     service: name={{ item }} state=restarted 
+     with_items:
+       - docker
+   - name: nvidia docker hello world
+     command: sudo docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
