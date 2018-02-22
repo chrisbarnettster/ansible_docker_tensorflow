@@ -3,11 +3,13 @@
   vars:
       current_host: "{{hostvars[inventory_hostname]['ansible_hostname']}}"
       current_ip: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+  become: yes
+  become_method: sudo
   tasks:
    - name: add nvidia docker repo
      command: yum-config-manager --add-repo https://nvidia.github.io/nvidia-docker/centos7/x86_64/nvidia-docker.repo
    - name: Install nvidia docker
-     yum: pkg={{ item }} state=present
+     yum: pkg={{ item }} state=present disable_gpg_check=yes
      with_items:
        - nvidia-docker2
    - name: restart docker daemon

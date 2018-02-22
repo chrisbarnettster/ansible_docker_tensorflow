@@ -3,6 +3,8 @@
   vars:
       current_host: "{{hostvars[inventory_hostname]['ansible_hostname']}}"
       current_ip: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+  become: yes
+  become_method: sudo
   tasks:
    - name: Install epel release
      yum:
@@ -15,6 +17,7 @@
        - docker-common
        - docker-selinux
        - docker-engine
+     ignore_errors: yes
    - name: Install required software
      yum: pkg={{ item }} state=present
      with_items:
