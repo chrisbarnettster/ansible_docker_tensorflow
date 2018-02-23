@@ -63,8 +63,8 @@ ansible-playbook playbooks/nvidia-docker.playbook
 
 
 ### run on other hosts
-if you know a bit about ansible, run on for example 10 hosts in parallel in the testing group 
-ansible-playbook gpu.playbook -f 10 --extra-vars "variable_host=testing"
+if you know a bit about ansible, you could run the playbooks on multiple hosts in parallel. 
+Say 10 hosts in the testing group: `ansible-playbook playbooks/docker.playbook -f 10 --extra-vars "variable_host=testing"`
 
 ## Tensorflow: pull and run docker images
 
