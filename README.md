@@ -53,8 +53,8 @@ ansible-playbook playbooks/nvidia-docker.playbook --ask-become-pass
 ```
 If you are logged in as root:
 ```
-ansible-playbook docker.playbook
-ansible-playbook nvidia-docker.playbook
+ansible-playbook playbooks/docker.playbook
+ansible-playbook playbooks/nvidia-docker.playbook
 ```
 
 ### test out docker hello-world
