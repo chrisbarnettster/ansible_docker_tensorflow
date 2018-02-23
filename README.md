@@ -1,6 +1,6 @@
 # ansible_docker_tensorflow
 
-Basic details for setting up ansible, docker and tensorflow
+Basic details for setting up Ansible, Docker and TensorFlow
 
 :bowtie: I run a [Scientific Linux](https://www.scientificlinux.org/) 7 system - this is based on RedHat Linux.
 Everything I do is with Scientific Linux 7 in mind. Apologies other Linux afficionados. Please clone and mod to suit your preferences. 
@@ -68,18 +68,18 @@ Say 10 hosts in the testing group: `ansible-playbook playbooks/docker.playbook -
 
 ## Tensorflow: pull and run docker images
 
-:white_check_mark: CPU only tensorflow
+:white_check_mark: CPU only TensorFlow
 ```
 sudo docker run -it -p 8888:8888 tensorflow/tensorflow
 ```
 
-:white_check_mark: GPU supported
+:white_check_mark: Nvidia GPU supported TensorFlow
 ```
 sudo nvidia-docker run -it -p 8888:8889 tensorflow/tensorflow:latest-gpu
 ```
 
 
-## tensorflow
+## TensorFlow
 Open a browser and browse to the links shown when starting the docker tensorflow image. 
 These link will look similar to the one below:
 ```
@@ -96,7 +96,7 @@ google-chrome localhost:8889
 
 If you're not familiar with Jupyter see https://jupyter.readthedocs.io/en/latest/running.html
 
-:white_check_mark: Play with existing notebooks from tensorflow and upload the example notebook in notebooks/tensorflow_notebook.ipynb (available from https://raw.githubusercontent.com/chrisbarnettster/ansible_docker_tensorflow/master/notebooks/tensorflow_notebook.ipynb)
+:white_check_mark: Play with existing notebooks from TensorFlow and upload the example notebook in notebooks/tensorflow_notebook.ipynb (available from https://raw.githubusercontent.com/chrisbarnettster/ansible_docker_tensorflow/master/notebooks/tensorflow_notebook.ipynb)
 
 
 # Issues
@@ -108,8 +108,8 @@ failed: [localhost] (item=[u'nvidia-docker2']) => {"changed": false, "item": ["n
 ```
 The nvidia repo has several sections and multiple GPG key requirements. I haven't got this just right yet, so ansible is supposed to ignore GPG keys. If this doesn't happen then `sudo yum install nvidia-docker2 --nogpgcheck`
 
-## docker breaks after nvidia install
-this happened to me when testing on a system with no nvidia card.
+## Docker breaks after Nvidia install
+this happened to me when testing on a system with no Nvidia card.
 after removing nvidia-cuda2 I still wasn't able to restart docker
 see https://github.com/moby/moby/issues/23089
 One fix is to remove or move /var/lib/docker and reinstall docker
